@@ -9,6 +9,7 @@ export let settings = (local ? JSON.parse(local) : null) || {
 
     mode: 'classic',
     blur: 'fixed',
+    language: 'en',
 
     disableSplash: false,
     disableSplashText: false,
@@ -35,6 +36,10 @@ if (!settings.desktop) {
 
 if (!settings.blur) {
     settings.blur = 'fixed'; // 3.2 update
+}
+
+if (!settings.language) {
+    settings.language = 'en';
 }
 
 // Handle display name change

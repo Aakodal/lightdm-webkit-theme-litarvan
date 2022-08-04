@@ -9,6 +9,7 @@ import Setup from './views/Setup.vue';
 import Select from './views/Select.vue';
 import Theming from './views/Theming';
 import Blur from './views/Blur';
+import LanguageSelector from './views/LanguageSelector';
 
 Vue.use(Router);
 
@@ -55,6 +56,11 @@ export default new Router({
                     component: Select
                 }
             ]
-        }
+        },
+        {
+            path: '/lang',
+            name: 'lang',
+            component: LanguageSelector
+        },
     ]
 });

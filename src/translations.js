@@ -1,6 +1,10 @@
+import { settings } from "./settings";
+
 const translations = {
     // English
     'en': {
+        name: 'English',
+
         trigger: 'Press Space or Enter to login',
         password: 'Password...',
 
@@ -33,11 +37,16 @@ const translations = {
         absoluteBlur: 'Blurred background - absolute background',
         staticBlur: 'Blurred background without transition',
         disabledBlur: 'Disable background blurring',
-        blurHelp: 'If you are having issues with blur like lags or artifacts, please try a different blur method.\nYou can disable the transition or even the entire blur if nothing is working.'
+        blurHelp: 'If you are having issues with blur like lags or artifacts, please try a different blur method.\nYou can disable the transition or even the entire blur if nothing is working.',
+
+        selectLanguage: 'Change language',
+        languages: 'Languages',
     },
 
     // French
     'fr': {
+        name: 'Français',
+
         trigger: 'Appuyez sur Espace ou Entrée pour vous connecter',
         password: 'Mot de passe...',
         shutdown: 'Arrêt...',
@@ -68,17 +77,24 @@ const translations = {
         absoluteBlur: 'Floutage du fond - fond \'absolute\'',
         staticBlur: 'Floutage du fond sans transition',
         disabledBlur: 'Désactiver le floutage du fond',
-        blurHelp: 'Si vous avez des problèmes avec le foutage comme des lags ou des artifacts, essayez une autre option de floutage.\nVous pouvez désactiver la transition ou le floutage lui même si aucune autre option ne fonctionne.'
+        blurHelp: 'Si vous avez des problèmes avec le foutage comme des lags ou des artifacts, essayez une autre option de floutage.\nVous pouvez désactiver la transition ou le floutage lui même si aucune autre option ne fonctionne.',
+
+        selectLanguage: 'Changer de langue',
+        languages: 'Langues',
     },
 
     // Dutch (TODO)
     'nl': {
+        name: 'Dutch', // TODO: translate name
+
         trigger: 'Druk op Spatie of Enter om aan te melden',
         password: 'Wachtwoord...'
     },
 
     // Polish
     'pl': {
+        name: 'Polish', // TODO: translate name
+
         trigger: 'Naciśnij Spację lub Enter aby kontynuować',
         password: 'Hasło...',
 
@@ -100,18 +116,24 @@ const translations = {
 
     // German (TODO)
     'de': {
+        name: 'Deutsch',
+
         trigger: 'Drücken Sie Leertaste oder Enter um sich einzuloggen',
         password: 'Passwort...'
     },
 
     // Portuguese (TODO)
     'pt': {
+        name: 'Portuguese', // TODO: translate name
+
         trigger: 'Carrega na tecla Espaço ou Enter para fazer login',
         password: 'Palavra-passe...'
     },
 
     // Spanish
     'es': {
+        name: 'Español',
+
         trigger: 'Presiona Espacio o Enter para iniciar sesión',
         password: 'Contraseña...',
 
@@ -145,10 +167,15 @@ const translations = {
         staticBlur: 'Fondo de pantalla desenfocado sin transición',
         disabledBlur: 'Deshabilitar desenfoque de fondo de pantalla',
         blurHelp: 'Si estás teniendo problemas con el desenfoque, como lag o problemas visuales, intenta un método de desenfoque distinto.\nPuedes deshabilitar la transición o incluso el desenfoque por completo si ninguna otra opción funciona.',
+
+        selectLanguage: 'Cambiar la idioma',
+        languages: 'Idiomas',
     },
 
     // Hebrew (TODO)
     'he': {
+        name: 'Hebrew', // TODO: translate name
+
         trigger: 'לחץ על רווח או Enter כדי להכנס',
         password: 'ססמה...',
 
@@ -171,6 +198,8 @@ const translations = {
     },
     // Chinese (Simplified)
     'zh-CN': {
+        name: 'Chinese (Simplified)', // TODO: translate name
+
         disableItalic: true, // Special key to disable the use of italic fonts
 
         trigger: '按空格或回车登录',
@@ -208,6 +237,8 @@ const translations = {
     },
     // Chinese (Traditional)
     'zh-TW': {
+        name: 'Chinese (Traditional)', // TODO: translate name
+
         disableItalic: true,
 
         trigger: '按下空格鍵或輸入鍵登入',
@@ -245,6 +276,8 @@ const translations = {
     },
     // Russian
     'ru': {
+        name: 'Russian', // TODO: translate name
+
         trigger: 'Нажмите пробел или ввод для входа в систему',
         password: 'Пароль...',
 
@@ -308,11 +341,11 @@ function getLocale()
 
 function trans(key)
 {
-    const lang = getLocale();
-    const candidates = [lang, lang.substring(0, 2), 'en'];
+    const lang = settings.language;
+    const candidates = [lang, 'en'];
     for (const candidate of candidates) {
         const translation = translations[candidate];
-        if (translation && translation[key]) {
+        if (translation?.[key]) {
             return translation[key];
         }
     }
@@ -320,7 +353,12 @@ function trans(key)
     return '';
 }
 
+const languages = Object.keys(translations)
+    .map((code) => ({ code: code, name: translations[code].name }))
+    .sort((a, b) => a.name > b.name);
+
 export {
     getLocale,
-    trans
+    trans,
+    languages,
 }
